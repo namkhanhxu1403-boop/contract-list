@@ -2,9 +2,11 @@ import { useState } from 'react'
 import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
+import { contracts } from './api/contracts'
 import './App.css'
 
 function App() {
+  console.log(contracts.length, contracts[0], contracts[1])
   const [count, setCount] = useState(0)
 
   return (
@@ -118,5 +120,7 @@ function App() {
     </>
   )
 }
+
+
 
 export default App
