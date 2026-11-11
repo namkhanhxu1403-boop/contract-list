@@ -1,4 +1,4 @@
-import type { Contract, ContractStatus } from '../types'
+import type { Contract, ContractStatus, ContractQuerry, ContractPage } from '../types'
 
 export const contracts: Contract[] = []
 
@@ -17,4 +17,24 @@ for (let i = 0; i < 200; i++) {
     ver: 1,
     status: statuses[i % statuses.length]
   })
+}
+
+export async function fetchContracts(query: ContractQuerry): Promise<ContractPage> {
+  await new Promise((resolve) => setTimeout(resolve, 300))
+  const filtered = contracts.filter((c) => !query.status || c.status === query.status)
+
+  const start = (query.page - 1) * query.pageSize
+  const end = start + query.pageSize
+  const total = filtered.length
+  const totalPage = Math.ceil(total / query.pageSize)
+
+  return {
+    data: filtered.slice(start, end),
+    pagination: {
+      page: query.page,
+      pageSize: query.pageSize,
+      total: total,
+      totalPages: totalPage,
+    },
+  }
 }
