@@ -1,9 +1,9 @@
 import express from 'express'
 import { contracts } from './contracts'
-
+import cors from 'cors'
 
 const app = express()
-
+app.use(cors())
 app.get('/health', (req, res) => {
   res.json({
     status:

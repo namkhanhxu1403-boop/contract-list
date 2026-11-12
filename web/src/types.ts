@@ -8,7 +8,7 @@ export interface Contract {
   status: ContractStatus
 }
 
-export interface ContractQuerry {
+export interface ContractQuery {
   page: number
   pageSize: number
   search?: string
