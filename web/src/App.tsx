@@ -16,7 +16,6 @@ function App() {
   const [status, setStatus] = useState<ContractStatus | ''>('')
   const [type, setType] = useState('')
 
-
   useEffect(() => {
     fetchContracts({ page, pageSize, search, status: status || undefined, type }).then(setResult)
   }, [page, pageSize, search, status, type])
@@ -117,7 +116,6 @@ function App() {
                 showFirstButton
                 showLastButton
               />
-
             </Box>
           </Box>
         </Box>

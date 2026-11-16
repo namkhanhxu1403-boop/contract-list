@@ -39,4 +39,6 @@ app.get('/api/contracts', (req, res) => {
   })
 })
 
-app.listen(4000, () => console.log("api on localhost port 4000. received."))
+const port = Number(process.env.PORT) || 4000
+
+app.listen(port, () => console.log("api on localhost port 4000. received."))
