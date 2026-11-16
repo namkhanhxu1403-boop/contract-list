@@ -7,6 +7,15 @@ import TopBar from './components/TopBar'
 import SideBar from './components/SideBar'
 import PageHeader from './components/PageHeader'
 
+function formatDate(iso: string): string {
+  return new Date('2027-01-06').toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC'
+  })
+}
+
 function App() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -24,7 +33,7 @@ function App() {
   }, [page, pageSize, search, status, type])
 
   if (error) {
-    return <p>salopard ! une grande erreur : {error}</p>
+    return <p>salopard ! on dirait qu'il y a une grande erreur. 'faut fixer : {error}</p>
   }
   if (!result) {
     return <p>attendez svp...</p>
@@ -95,7 +104,7 @@ function App() {
                     <TableCell>{c.title}</TableCell>
                     <TableCell>{c.type}</TableCell>
                     <TableCell>{c.language}</TableCell>
-                    <TableCell>{c.updatedAt}</TableCell>
+                    <TableCell>{formatDate(c.updatedAt)}</TableCell>
                     <TableCell>V{c.ver}</TableCell>
                     <TableCell>{c.status}</TableCell>
                   </TableRow>
