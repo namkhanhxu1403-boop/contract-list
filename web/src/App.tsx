@@ -34,6 +34,7 @@ function App() {
   const [status, setStatus] = useState<ContractStatus | ''>('')
   const [type, setType] = useState('')
   const [pageInput, setPageInput] = useState('1')
+  const [collapsed, setCollapsed] = useState(false)
 
   const [error, setError] = useState('')
 
@@ -71,7 +72,7 @@ function App() {
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         <TopBar />
         <Box sx={{ display: 'flex', flex: 1 }}>
-          <SideBar />
+          <SideBar collapsed={ collapsed } onToggle={() => setCollapsed(!collapsed)} />
           <Box sx={{ flex: 1, p: 3, bgcolor: 'grey.100' }}>
             <PageHeader />
             <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
