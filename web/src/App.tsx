@@ -33,6 +33,7 @@ function App() {
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState<ContractStatus | ''>('')
   const [type, setType] = useState('')
+  const [pageInput, setPageInput] = useState('1')
 
   const [error, setError] = useState('')
 
@@ -41,11 +42,26 @@ function App() {
     fetchContracts({ page, pageSize, search, status: status || undefined, type }).then(setResult).catch(() => setError('Could not load contracts'))
   }, [page, pageSize, search, status, type])
 
+  useEffect(() => {
+    setPageInput(String(page))
+  }, [page])
+
   if (error) {
-    return <p>salopard ! on dirait qu'il y a une grande erreur. 'faut fixer : {error}</p>
+    return <p>on dirait qu'il y a une grande erreur. 'faut fixer (Error, need checking) : {error}</p>
   }
   if (!result) {
     return <p>attendez svp...</p>
+  }
+
+  function applyPageInput() {
+    const checkNumber = Number(pageInput)
+    if (!checkNumber) {
+      setPageInput(String(page))
+      return
+    }
+    const targetValue = Math.min(Math.max(checkNumber, 1), result.pagination.totalPages)
+    setPage(targetValue)
+    setPageInput(String(targetValue))
   }
 
   return (
@@ -130,26 +146,39 @@ function App() {
             </Table>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2}}>
-                <Typography>Page {page} of {result.pagination.totalPages}</Typography>
+                <Typography>
+                  Page
+                </Typography>
+                <TextField
+                  size='small'
+                  value={pageInput}
+                  onChange={(e) => { setPageInput(e.target.value) }}
+                  onKeyDown={(e) => { if (e.key === 'Enter') applyPageInput() }}
+                  onBlur={applyPageInput}
+                  sx={{ width: 56 }}
+                />
+                <Typography>of {result.pagination.totalPages}</Typography>
+                <Typography sx={{ fontSize: 14 }}>Rows per page</Typography>
                 <TextField
                   select
                   size="small"
-                  label="Rows"
-                  sx={{ minWidth: 140 }}
+                  sx={{ minWidth: 70 }}
                   value={pageSize}
                   onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1)}}
                 >
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={20}>20</MenuItem>
-                  <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
                 </TextField>
               </Box>
-              <Pagination
-                count={result.pagination.totalPages}
-                page={page}
-                onChange={(_, p) => setPage(p)}
-                showFirstButton
-                showLastButton
+                <Pagination
+                  variant='outlined'
+                  shape='rounded'
+                  count={result.pagination.totalPages}
+                  page={page}
+                  onChange={(_, p) => setPage(p)}
+                  showFirstButton
+                  showLastButton
               />
             </Box>
             </Paper>
