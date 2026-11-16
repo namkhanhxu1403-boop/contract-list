@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Menu, Typography } from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { fetchContracts } from './api/contracts'
 import type { ContractPage, ContractStatus } from './types'
