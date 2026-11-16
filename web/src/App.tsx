@@ -16,11 +16,19 @@ function App() {
   const [status, setStatus] = useState<ContractStatus | ''>('')
   const [type, setType] = useState('')
 
+  const [error, setError] = useState('')
+
   useEffect(() => {
-    fetchContracts({ page, pageSize, search, status: status || undefined, type }).then(setResult)
+    setError('')
+    fetchContracts({ page, pageSize, search, status: status || undefined, type }).then(setResult).catch(() => setError('Could not load contracts'))
   }, [page, pageSize, search, status, type])
 
-  if (!result) return <p>attendez svp...</p>
+  if (error) {
+    return <p>ouh là la! une grande erreur, salopard : {error}</p>
+  }
+  if (!result) {
+    return <p>attendez svp...</p>
+  }
 
   return (
     <CssBaseline>
