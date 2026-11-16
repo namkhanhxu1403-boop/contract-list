@@ -53,13 +53,15 @@ function App() {
     return <p>attendez svp...</p>
   }
 
+  const totalPages = result.pagination.totalPages
+
   function applyPageInput() {
     const checkNumber = Number(pageInput)
     if (!checkNumber) {
       setPageInput(String(page))
       return
     }
-    const targetValue = Math.min(Math.max(checkNumber, 1), result.pagination.totalPages)
+    const targetValue = Math.min(Math.max(checkNumber, 1), totalPages)
     setPage(targetValue)
     setPageInput(String(targetValue))
   }
