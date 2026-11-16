@@ -6,6 +6,7 @@ import { Box, CssBaseline } from '@mui/material'
 import TopBar from './components/TopBar'
 import SideBar from './components/SideBar'
 import PageHeader from './components/PageHeader'
+import ActionCell from './components/ActionCell'
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', {
@@ -102,6 +103,7 @@ function App() {
                   <TableCell>Last updated</TableCell>
                   <TableCell>Ver</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -112,7 +114,8 @@ function App() {
                     <TableCell>{c.language}</TableCell>
                     <TableCell>{formatDate(c.updatedAt)}</TableCell>
                     <TableCell>V{c.ver}</TableCell>
-                    <TableCell><Chip label={STATUS_LABEL[c.status]} size="small"/></TableCell>
+                    <TableCell><Chip label={STATUS_LABEL[c.status]} size="small" /></TableCell>
+                    <TableCell><ActionCell status={c.status} /></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
