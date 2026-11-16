@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography, Paper, Chip } from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography, Paper, Chip, IconButton } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { fetchContracts } from './api/contracts'
 import type { ContractPage, ContractStatus } from './types'
@@ -7,6 +7,8 @@ import TopBar from './components/TopBar'
 import SideBar from './components/SideBar'
 import PageHeader from './components/PageHeader'
 import ActionCell from './components/ActionCell'
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', {
@@ -109,13 +111,19 @@ function App() {
               <TableBody>
                 {result.data.map((c) => (
                   <TableRow key={c.id}>
-                    <TableCell>{c.title}</TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <DescriptionOutlinedIcon fontSize="small" sx={{ color: 'grey.500' }} />
+                        {c.title}
+                      </Box>
+                    </TableCell>
                     <TableCell>{c.type}</TableCell>
                     <TableCell>{c.language}</TableCell>
                     <TableCell>{formatDate(c.updatedAt)}</TableCell>
                     <TableCell>V{c.ver}</TableCell>
                     <TableCell><Chip label={STATUS_LABEL[c.status]} size="small" /></TableCell>
                     <TableCell><ActionCell status={c.status} /></TableCell>
+                    <TableCell><IconButton size='small'><MoreVertIcon fontSize='small'/></IconButton></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
