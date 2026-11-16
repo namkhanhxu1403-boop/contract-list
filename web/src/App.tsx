@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography } from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography, Paper } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { fetchContracts } from './api/contracts'
 import type { ContractPage, ContractStatus } from './types'
@@ -24,7 +24,7 @@ function App() {
   }, [page, pageSize, search, status, type])
 
   if (error) {
-    return <p>ouh là la! une grande erreur, salopard : {error}</p>
+    return <p>salopard ! une grande erreur : {error}</p>
   }
   if (!result) {
     return <p>attendez svp...</p>
@@ -36,7 +36,7 @@ function App() {
         <TopBar />
         <Box sx={{ display: 'flex', flex: 1 }}>
           <SideBar />
-          <Box sx={{ flex: 1, p: 1 }}>
+          <Box sx={{ flex: 1, p: 3, bgcolor: 'grey.100' }}>
             <PageHeader />
             <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
               <TextField
@@ -77,6 +77,7 @@ function App() {
                 <MenuItem value="Supply">Supply</MenuItem>
               </TextField>
             </Box>
+            <Paper sx={{ p: 2 }} variant="outlined">
             <Table size="small">
               <TableHead>
                 <TableRow>
@@ -125,6 +126,7 @@ function App() {
                 showLastButton
               />
             </Box>
+            </Paper>
           </Box>
         </Box>
       </Box>
