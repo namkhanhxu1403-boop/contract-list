@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography, Paper } from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow, Pagination, TextField, MenuItem, Typography, Paper, Chip } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { fetchContracts } from './api/contracts'
 import type { ContractPage, ContractStatus } from './types'
@@ -8,12 +8,18 @@ import SideBar from './components/SideBar'
 import PageHeader from './components/PageHeader'
 
 function formatDate(iso: string): string {
-  return new Date('2027-01-06').toLocaleDateString('en-US', {
+  return new Date(iso).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
     timeZone: 'UTC'
   })
+}
+
+const STATUS_LABEL: Record<ContractStatus, string> = {
+  DRAFT: 'Draft',
+  REVIEWING: 'Reviewing',
+  RETURNED: 'Returned'
 }
 
 function App() {
@@ -106,7 +112,7 @@ function App() {
                     <TableCell>{c.language}</TableCell>
                     <TableCell>{formatDate(c.updatedAt)}</TableCell>
                     <TableCell>V{c.ver}</TableCell>
-                    <TableCell>{c.status}</TableCell>
+                    <TableCell><Chip label={STATUS_LABEL[c.status]} size="small"/></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
